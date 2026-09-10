@@ -86,7 +86,10 @@ class Commands(commands.Cog):
         message: str
     ):
 
-        if interaction.user.id != config.SERVER_OWNER_ID:
+        if (
+            interaction.user.id != config.SERVER_OWNER_ID
+            and not any(role.id == config.ADMIN_ROLE_ID for role in interaction.user.roles)
+        ):
             await interaction.response.send_message(
                 "You don't have permission to use this command.",
                 ephemeral=True
